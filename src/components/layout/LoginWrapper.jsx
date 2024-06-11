@@ -1,6 +1,8 @@
+import { Stories } from "./stories/Stories";
+
 export const LoginWrapper = ({ loggedIn }) => {
 	if (loggedIn) {
-		return console.log("estoy logeado");
+		return <Stories />;
 	} else {
 		return (
 			<form>

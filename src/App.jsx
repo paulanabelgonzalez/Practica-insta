@@ -1,7 +1,7 @@
 import { LoginWrapper } from "./components/layout/LoginWrapper";
 
 function App() {
-	const loggedIn = false;
+	const loggedIn = true;
 	return (
 		<>
 			<LoginWrapper loggedIn={loggedIn} />
