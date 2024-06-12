@@ -1,4 +1,4 @@
-import { LoginWrapper } from "./components/layout/LoginWrapper";
+import { LoginWrapper } from "./components/layout/loginWrapper/LoginWrapper";
 
 function App() {
 	const loggedIn = true;
