@@ -1,5 +1,5 @@
+import { Carrousel } from "../../carrousel/Carrousel";
 import { Post } from "../../post/Post";
-import { Stories } from "../stories/Stories";
 
 export const LoginWrapper = ({ loggedIn }) => {
 	const hasNoText = true;
@@ -7,7 +7,7 @@ export const LoginWrapper = ({ loggedIn }) => {
 	if (loggedIn) {
 		return (
 			<>
-				<Stories />
+				<Carrousel />
 				<Post
 					userName="Ever"
 					imgUser="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=600"
