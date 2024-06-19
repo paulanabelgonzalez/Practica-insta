@@ -3,13 +3,11 @@ import { User } from "../../user/User";
 import gaby from "../../../assets/gaby.jpeg";
 
 export const Stories = () => {
-	const historySeen = true;
 	return (
-		<div className="flex justify-center gap-5 mt-3">
+		<div className="flex max-w-[640px] mx-auto overflow-x-scroll gap-5 mt-3">
 			<User
 				imgUser="https://images.pexels.com/photos/2272853/pexels-photo-2272853.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 				userName="Naomi"
-				historySeen={historySeen}
 			/>
 			<User
 				imgUser="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -18,7 +16,6 @@ export const Stories = () => {
 			<User
 				imgUser="https://images.pexels.com/photos/3992656/pexels-photo-3992656.png?auto=compress&cs=tinysrgb&w=600"
 				userName="Anabel"
-				historySeen={historySeen}
 			/>
 			<User imgUser={gaby} userName="Gaby" />
 			<User

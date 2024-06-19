@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
 	FaRegComment,
 	FaHeart,
@@ -6,15 +8,34 @@ import {
 } from "react-icons/fa";
 import { BiBookmark } from "react-icons/bi";
 
-export const Like = ({ isLiked }) => {
+export const Like = () => {
+	const [isLiked, setIsLiked] = useState(false);
+	const [count, setCount] = useState("");
+
+	const handleIsLiked = () => {
+		if (isLiked) {
+			setIsLiked(false);
+			console.log(0);
+			setCount(count - 1);
+		} else {
+			console.log(1);
+			setIsLiked(true);
+			setCount(count + 1);
+		}
+	};
+
 	return (
 		<>
 			<div className="flex justify-between">
 				<div className="flex gap-3">
 					{isLiked ? (
-						<FaHeart className="size-6" style={{ color: "red" }} />
+						<FaHeart
+							className="size-6"
+							style={{ color: "red" }}
+							onClick={handleIsLiked}
+						/>
 					) : (
-						<FaRegHeart className="size-6" />
+						<FaRegHeart className="size-6" onClick={handleIsLiked} />
 					)}
 
 					<FaRegPaperPlane className="size-6" />
@@ -27,10 +48,10 @@ export const Like = ({ isLiked }) => {
 			<div className="py-3">
 				{isLiked ? (
 					<p>
-						<span>1</span> Me gusta
+						<span>{count}</span> Me gusta
 					</p>
 				) : (
-					""
+					<p>{count === 0 && ""}</p>
 				)}
 			</div>
 		</>
