@@ -12,7 +12,7 @@ export const Post = ({
 	const inPost = true;
 
 	return (
-		<div className="max-w-[640px] mx-auto my-14 border-t px-4 pt-9 pb-5">
+		<div className="max-w-[640px] mx-auto my-14 border-b pb-20">
 			<div className="flex justify-between">
 				<User userName={userName} imgUser={imgUser} inPost={inPost} />
 				<button className="text-[40px]">...</button>

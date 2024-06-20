@@ -1,13 +1,20 @@
+import { useState } from "react";
+
 import { Carrousel } from "../../carrousel/Carrousel";
+import { Navbar } from "../navbar/Navbar";
 import { Post } from "../../post/Post";
 
-export const LoginWrapper = ({ loggedIn }) => {
+export const LoginWrapper = () => {
 	const hasNoText = true;
+	const [loggedIn, setLoggedIn] = useState(false);
 
 	if (loggedIn) {
 		return (
 			<>
 				<Carrousel />
+
+				<Navbar setLoggedIn={setLoggedIn} />
+
 				<Post
 					userName="Ever"
 					imgUser="https://images.pexels.com/photos/837358/pexels-photo-837358.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -54,7 +61,7 @@ export const LoginWrapper = ({ loggedIn }) => {
 				<input type="text" />
 				<label htmlFor="password">Contraseña</label>
 				<input type="password" />
-				<button>Iniciar Sesión</button>
+				<button onClick={() => setLoggedIn(true)}>Iniciar Sesión</button>
 			</form>
 		);
 	}
