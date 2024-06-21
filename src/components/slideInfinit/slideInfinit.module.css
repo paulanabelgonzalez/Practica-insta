@@ -1,0 +1,29 @@
+@keyframes slide {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+.contain {
+	max-width: 640px;
+	margin: auto;
+	padding-inline: 6px;
+	margin-top: 51px;
+	display: flex;
+	flex-direction: row;
+	white-space: nowrap;
+	overflow: hidden;
+	background: linear-gradient(to right, #6f3596, #ec2020, #f4ac45);
+}
+
+.list {
+	display: flex;
+	align-items: center;
+	padding-inline: 6px;
+	gap: 8px;
+	font-size: 20px;
+	animation: 25s slide infinite linear;
+}

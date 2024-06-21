@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Carrousel } from "../../carrousel/Carrousel";
 import { Navbar } from "../navbar/Navbar";
 import { Post } from "../../post/Post";
+import { SlideInfinit } from "../../slideInfinit/SlideInfinit";
 
 export const LoginWrapper = () => {
 	const hasNoText = true;
@@ -14,6 +15,8 @@ export const LoginWrapper = () => {
 				<Navbar setLoggedIn={setLoggedIn} />
 
 				<Carrousel />
+
+				<SlideInfinit />
 
 				<Post
 					userName="Ever"
