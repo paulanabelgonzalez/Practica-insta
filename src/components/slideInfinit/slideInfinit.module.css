@@ -16,7 +16,7 @@
 	flex-direction: row;
 	white-space: nowrap;
 	overflow: hidden;
-	background: linear-gradient(to right, #6f3596, #ec2020, #f4ac45);
+	background: linear-gradient(115deg, #f9ce34, #ee2a7b, #6228d7);
 }
 
 .list {
