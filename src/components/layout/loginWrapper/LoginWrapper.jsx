@@ -11,9 +11,9 @@ export const LoginWrapper = () => {
 	if (loggedIn) {
 		return (
 			<>
-				<Carrousel />
-
 				<Navbar setLoggedIn={setLoggedIn} />
+
+				<Carrousel />
 
 				<Post
 					userName="Ever"
