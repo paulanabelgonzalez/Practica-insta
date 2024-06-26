@@ -1,13 +1,16 @@
 import { useState } from "react";
 
 import { Carrousel } from "../../carrousel/Carrousel";
+import { Login } from "../../login/Login";
 import { Navbar } from "../navbar/Navbar";
 import { Post } from "../../post/Post";
+import { Register } from "../../login/Register";
 import { SlideInfinit } from "../../slideInfinit/SlideInfinit";
 
 export const LoginWrapper = () => {
 	const hasNoText = true;
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [isRegister, setIsRegister] = useState(true);
 
 	if (loggedIn) {
 		return (
@@ -59,13 +62,13 @@ export const LoginWrapper = () => {
 		);
 	} else {
 		return (
-			<form>
-				<label htmlFor="userName">Nombre Usuario</label>
-				<input type="text" />
-				<label htmlFor="password">Contraseña</label>
-				<input type="password" />
-				<button onClick={() => setLoggedIn(true)}>Iniciar Sesión</button>
-			</form>
+			<>
+				{isRegister ? (
+					<Login setLoggedIn={setLoggedIn} setIsRegister={setIsRegister} />
+				) : (
+					<Register setLoggedIn={setLoggedIn} setIsRegister={setIsRegister} />
+				)}
+			</>
 		);
 	}
 };

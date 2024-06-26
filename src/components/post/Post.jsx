@@ -26,11 +26,7 @@ export const Post = ({
 			</div>
 			<Like isLiked={isLiked} />
 			<p>
-				{hasNoText ? (
-					console.log("no tiene texto")
-				) : (
-					<span className="font-bold">{userName}</span>
-				)}
+				{hasNoText ? "" : <span className="font-bold">{userName}</span>}
 				<span className="ps-1.5">{textPost}</span>
 			</p>
 		</div>
