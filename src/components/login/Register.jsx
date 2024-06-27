@@ -104,6 +104,16 @@ export const Register = ({ setLoggedIn, setIsRegister }) => {
 					className="border px-2 py-1 bg-gray-200 rounded block mx-auto cursor-pointer"
 				/>
 			</form>
+			<p className="text-center">
+				Ya tienes cuenta?{" "}
+				<span
+					className="text-[#1d1dcd] cursor-pointer underline"
+					onClick={() => setIsRegister(true)}
+				>
+					Inicia sesión
+				</span>
+				.
+			</p>
 		</div>
 	);
 };

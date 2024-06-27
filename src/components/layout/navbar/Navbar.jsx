@@ -1,36 +1,31 @@
-import { useState } from "react";
+import { NewPost } from "../../newPost/NewPost";
 
-import { RxHamburgerMenu } from "react-icons/rx";
+import { Button, HStack } from "@chakra-ui/react";
 
-export const Navbar = ({ setLoggedIn }) => {
-	const [hamburguerMenu, setHamburguerMenu] = useState(false);
-
+export const Navbar = ({ setLoggedIn, userNameLogin }) => {
 	return (
 		<>
-			<nav className="bg-[pink] p-2 max-w-[640px] mx-auto mb-6 flex justify-between items-start gap-4">
-				<p>Bienvenida, Paula!</p>
-				<div className="flex flex-col items-end gap-2">
-					<button>
-						<RxHamburgerMenu
-							className="w-8 h-8"
-							onClick={() => {
-								setHamburguerMenu(!hamburguerMenu);
-							}}
-						/>
-					</button>
-					{hamburguerMenu ? (
-						<button
-							onClick={() => {
-								setLoggedIn(false);
-							}}
-						>
-							Cerrar Sesión
-						</button>
-					) : (
-						""
-					)}
-				</div>
-			</nav>
+			<HStack
+				as="nav"
+				maxW="640px"
+				margin="auto"
+				justifyContent="space-between"
+				paddingBlock="15px"
+			>
+				<p>Bienvenida,{userNameLogin}Paula!</p>
+				<NewPost />
+
+				<Button
+					colorScheme="pink"
+					variant="ghost"
+					color="#bbb9b9"
+					onClick={() => {
+						setLoggedIn(false);
+					}}
+				>
+					Cerrar Sesión
+				</Button>
+			</HStack>
 		</>
 	);
 };

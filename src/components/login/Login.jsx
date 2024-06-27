@@ -2,13 +2,15 @@ import { useState } from "react";
 
 import { ViewPassword } from "./ViewPassword";
 
-export const Login = ({ setIsLoggedIn, setIsRegister }) => {
+export const Login = ({ setLoggedIn, setIsRegister }) => {
 	const [userNameLogin, setUserNameLogin] = useState("");
 	const [password, setPassword] = useState("");
 	const [typePassword, setTypePassword] = useState("password");
 
+	// console.log(userNameLogin);
+
 	const usuario = {
-		nombre: "paula",
+		nombre: "Paula",
 		contraseña: "123",
 	};
 
@@ -24,12 +26,17 @@ export const Login = ({ setIsLoggedIn, setIsRegister }) => {
 			usuario.nombre === datos.nombre &&
 			usuario.contraseña === datos.contraseña
 		) {
-			setIsLoggedIn(true);
+			setLoggedIn(true);
 		}
+		if (
+			usuario.nombre != datos.nombre ||
+			usuario.contraseña != datos.contraseña
+		) {
+			alert("Los datos ingresados no coinciden con ningún usuario registrado.");
+		}
+
 		if (datos.nombre === "" || datos.contraseña === "") {
 			alert("Por favor complete todos los campos");
-		} else {
-			alert("Los datos ingresados no coinciden con ningún usuario registrado.");
 		}
 	};
 	return (
