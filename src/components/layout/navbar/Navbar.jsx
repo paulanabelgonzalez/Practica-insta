@@ -2,7 +2,13 @@ import { NewPost } from "../../newPost/NewPost";
 
 import { Button, HStack } from "@chakra-ui/react";
 
-export const Navbar = ({ setLoggedIn, userNameLogin }) => {
+export const Navbar = ({
+	setLoggedIn,
+	userName,
+	imgUser,
+	postsArray,
+	setPostsArray,
+}) => {
 	return (
 		<>
 			<HStack
@@ -12,8 +18,14 @@ export const Navbar = ({ setLoggedIn, userNameLogin }) => {
 				justifyContent="space-between"
 				paddingBlock="15px"
 			>
-				<p>Bienvenida,{userNameLogin}Paula!</p>
-				<NewPost />
+				<p>Bienvenida, {userName}!</p>
+
+				<NewPost
+					userName={userName}
+					imgUser={imgUser}
+					postsArray={postsArray}
+					setPostsArray={setPostsArray}
+				/>
 
 				<Button
 					colorScheme="pink"

@@ -1,28 +1,57 @@
 import { useState } from "react";
 
 import { Carrousel } from "../../carrousel/Carrousel";
-import { ContainerPost } from "../containerPost/ContainerPost";
 import { Login } from "../../login/Login";
 import { Navbar } from "../navbar/Navbar";
-// import { Post } from "../../post/Post";
+import { Post } from "../../post/Post";
 import { Register } from "../../login/Register";
 import { SlideInfinit } from "../../slideInfinit/SlideInfinit";
 
-export const LoginWrapper = ({ userNameLogin }) => {
-	const [loggedIn, setLoggedIn] = useState(false);
-	const [isRegister, setIsRegister] = useState(true);
+import { posts } from "../../../posts";
 
-	// console.log(userNameLogin);
+import profilePic from "../../../assets/perfil.jpg";
+
+export const LoginWrapper = () => {
+	const [loggedIn, setLoggedIn] = useState(true);
+	const [isRegister, setIsRegister] = useState(true);
+	const [postsArray, setPostsArray] = useState(posts);
+
+	const usuario = {
+		nombre: "Paula",
+		avatar: profilePic,
+	};
+
 	if (loggedIn) {
 		return (
 			<>
-				<Navbar userNameLogin={userNameLogin} setLoggedIn={setLoggedIn} />
+				<Navbar
+					userName={usuario.nombre}
+					setLoggedIn={setLoggedIn}
+					imgUser={usuario.avatar}
+					postsArray={postsArray}
+					setPostsArray={setPostsArray}
+				/>
 
 				<Carrousel />
 
 				<SlideInfinit />
 
-				<ContainerPost />
+				<div>
+					{postsArray.map(
+						({ userName, imgUser, imgPost, textPost, hasNoText, id }) => {
+							return (
+								<Post
+									key={id}
+									userName={userName}
+									imgUser={imgUser}
+									imgPost={imgPost}
+									textPost={textPost}
+									hasNoText={hasNoText}
+								/>
+							);
+						}
+					)}
+				</div>
 			</>
 		);
 	} else {
