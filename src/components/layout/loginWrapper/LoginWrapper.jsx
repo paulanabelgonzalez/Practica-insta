@@ -7,7 +7,7 @@ import { Post } from "../../post/Post";
 import { Register } from "../../login/Register";
 import { SlideInfinit } from "../../slideInfinit/SlideInfinit";
 
-import { posts } from "../../../posts";
+import { posts } from "../../../utils/posts";
 
 import profilePic from "../../../assets/perfil.jpg";
 

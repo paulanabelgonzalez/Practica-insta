@@ -15,10 +15,10 @@ export const Like = () => {
 	const handleIsLiked = () => {
 		if (isLiked) {
 			setIsLiked(false);
-			console.log(0);
+			// console.log(0);
 			setCount(count - 1);
 		} else {
-			console.log(1);
+			// console.log(1);
 			setIsLiked(true);
 			setCount(count + 1);
 		}

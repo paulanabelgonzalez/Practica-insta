@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { imgValidations } from "../../utils/validations";
 
 import { useDisclosure } from "@chakra-ui/react";
-
 import {
 	Box,
 	Button,
@@ -19,31 +18,42 @@ import {
 	Textarea,
 } from "@chakra-ui/react";
 
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+
+import { v4 as uuidv4 } from "uuid";
 import { CgAddR } from "react-icons/cg";
 
 export const NewPost = ({ userName, imgUser, postsArray, setPostsArray }) => {
-	const [input, setInput] = useState("");
-
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
-	const handleInputChange = (e) => setInput(e.target.value);
+	const {
+		register,
+		reset,
+		formState: { errors },
+		handleSubmit,
+	} = useForm({ criteriaMode: "all" });
+	// console.log(errors);
 
-	const isError = input === "";
+	const handleCloseReset = () => {
+		onClose();
+		reset();
+	};
 
-	const handleSubmitNewPosts = (e) => {
-		e.preventDefault();
-
+	const onSubmit = (data) => {
+		// console.log(data);
 		const newPost = {
+			id: uuidv4(),
 			userName: userName,
 			imgUser: imgUser,
-			imgPost: e.target.imgPost.value,
-			textPost: e.target.descriptionPost.value,
+			imgPost: data.imgPost,
+			textPost: data.textPost,
 			hasNoText: false,
 		};
 
 		const postsNewArray = [...postsArray, newPost];
 		setPostsArray(postsNewArray);
-		onClose();
+		handleCloseReset();
 	};
 
 	return (
@@ -60,7 +70,7 @@ export const NewPost = ({ userName, imgUser, postsArray, setPostsArray }) => {
 				Nuevo Post
 			</Button>
 
-			<Modal isOpen={isOpen} onClose={onClose}>
+			<Modal isOpen={isOpen} onClose={handleCloseReset}>
 				<ModalOverlay />
 				<ModalContent>
 					<ModalHeader color="#efa4b1" textDecoration="underline">
@@ -68,19 +78,28 @@ export const NewPost = ({ userName, imgUser, postsArray, setPostsArray }) => {
 					</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
-						<Box as="form" onSubmit={handleSubmitNewPosts}>
-							<FormControl isInvalid={isError}>
+						<Box as="form" onSubmit={handleSubmit(onSubmit)}>
+							<FormControl isInvalid={errors.imgPost ? true : false}>
 								<FormLabel>Imagen</FormLabel>
 								<Input
 									type="text"
-									onChange={handleInputChange}
 									name="imgPost"
+									{...register("imgPost", imgValidations)}
 								/>
-								<FormErrorMessage>La imagen es obligatoria</FormErrorMessage>
+								<ErrorMessage
+									errors={errors}
+									name="imgPost"
+									render={({ messages }) =>
+										messages &&
+										Object.entries(messages).map(([type, message]) => (
+											<FormErrorMessage key={type}>{message}</FormErrorMessage>
+										))
+									}
+								/>
 							</FormControl>
 							<FormControl mt="20px">
 								<FormLabel>Descripción</FormLabel>
-								<Textarea name="descriptionPost" />
+								<Textarea {...register("textPost", { required: true })} />
 							</FormControl>
 							<HStack my="20px" justifyContent="end">
 								<Button
@@ -89,7 +108,7 @@ export const NewPost = ({ userName, imgUser, postsArray, setPostsArray }) => {
 									borderColor="#efa4b1"
 									color="#efa4b1"
 									_hover={{ borderColor: "#d2009a", color: "#d2009a" }}
-									onClick={onClose}
+									onClick={handleCloseReset}
 								>
 									Cerrar
 								</Button>
