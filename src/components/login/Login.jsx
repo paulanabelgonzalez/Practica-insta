@@ -2,18 +2,22 @@ import { useState } from "react";
 
 import { ViewPassword } from "./ViewPassword";
 
-import { Box, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import {
+	Box,
+	FormControl,
+	FormLabel,
+	Input,
+	useDisclosure,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
+import { ModalValidations } from "./ModalValidations";
 
 export const Login = ({ setLoggedIn, setIsRegister }) => {
 	const [typePassword, setTypePassword] = useState("password");
+	const [validations, setValidations] = useState();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
-	const {
-		register,
-		formState: { errors },
-		handleSubmit,
-	} = useForm();
+	const { register, handleSubmit } = useForm();
 	// console.log(errors);
 	const usuario = {
 		nombre: "Paula",
@@ -35,15 +39,23 @@ export const Login = ({ setLoggedIn, setIsRegister }) => {
 			setLoggedIn(true);
 		}
 		if (usuario.nombre != datos.name || usuario.contraseña != datos.password) {
-			alert("Los datos ingresados no coinciden con ningún usuario registrado.");
+			onOpen();
+			setValidations(0);
 		}
 
 		if (datos.name === "" || datos.password === "") {
-			alert("Por favor complete todos los campos");
+			onOpen();
+			setValidations(1);
 		}
 	};
 	return (
 		<Box mt="14%">
+			<ModalValidations
+				isOpen={isOpen}
+				onClose={onClose}
+				validations={validations}
+			/>
+
 			<h2 className="text-2xl text-center mb-8">Iniciar Sesión</h2>
 
 			<Box
@@ -57,11 +69,7 @@ export const Login = ({ setLoggedIn, setIsRegister }) => {
 				mb="2rem"
 				onSubmit={handleSubmit(onSubmit)}
 			>
-				<FormControl
-					mb={5}
-					position="relative"
-					isInvalid={errors.name ? true : false}
-				>
+				<FormControl mb={5} position="relative">
 					<FormLabel display="block" mb="10px">
 						Nombre Usuario
 					</FormLabel>
@@ -74,22 +82,11 @@ export const Login = ({ setLoggedIn, setIsRegister }) => {
 						borderRadius="md"
 						px={2}
 						py={2}
-						{...register("name", {
-							required: "El nombre de usuario es obligatorio.",
-						})}
-					/>
-					<ErrorMessage
-						errors={errors}
-						name="name"
-						render={({ message }) => <p className="text-red-600">{message}</p>}
+						{...register("name")}
 					/>
 				</FormControl>
 
-				<FormControl
-					mb={5}
-					position="relative"
-					isInvalid={errors.password ? true : false}
-				>
+				<FormControl mb={5} position="relative">
 					<FormLabel display="block" mb="10px">
 						Contraseña
 					</FormLabel>
@@ -102,18 +99,11 @@ export const Login = ({ setLoggedIn, setIsRegister }) => {
 						borderRadius="md"
 						px={2}
 						py={2}
-						{...register("password", {
-							required: "La contraseña es obligatoria.",
-						})}
+						{...register("password")}
 					/>
 					<ViewPassword
 						typePassword={typePassword}
 						setTypePassword={setTypePassword}
-					/>
-					<ErrorMessage
-						errors={errors}
-						name="password"
-						render={({ message }) => <p className="text-red-600">{message}</p>}
 					/>
 				</FormControl>
 
