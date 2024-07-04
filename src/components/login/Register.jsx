@@ -1,8 +1,23 @@
 import { useState } from "react";
 
 import { ViewPassword } from "./ViewPassword";
+import { ModalValidations } from "./ModalValidations";
 
-export const Register = ({ setLoggedIn, setIsRegister }) => {
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+
+import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { color } from "framer-motion";
+
+export const Register = ({
+	setLoggedIn,
+	setIsRegister,
+	isOpen,
+	onOpen,
+	onClose,
+	validations,
+	setValidations,
+}) => {
 	const [userNameRegister, setUserNameRegister] = useState("");
 	const [email, setEmail] = useState("");
 	const [passwordRegister, setPasswordRegister] = useState("");
@@ -10,110 +25,293 @@ export const Register = ({ setLoggedIn, setIsRegister }) => {
 	const [typePassword, setTypePassword] = useState("password");
 	const [isValid, setIsValid] = useState(false);
 
-	const handleRegisterSubmit = (e) => {
-		e.preventDefault();
+	const {
+		register,
+		formState: { errors },
+		handleSubmit,
+	} = useForm({
+		criteriaMode: "all",
+	});
 
-		if (passwordRegister === repeatPassword) {
-			setIsValid(true);
-		} else {
-			alert("Las contraseñas no coinciden");
+	// console.log(errors);
+
+	const onSubmit = (data) => {
+		console.log(data.nameRegister);
+
+		// const datos = {
+		// 	name: data.nameRegister,
+		// };
+
+		// console.log(datos);
+
+		if (data.password !== data.repeatPassword) {
+			onOpen();
+			setValidations(2);
 		}
-
-		if (userNameRegister !== "" && email !== "" && passwordRegister !== "") {
-			setIsValid(true);
-		} else {
-			alert("Por favor complete todos los campos");
-		}
-
 		if (
-			passwordRegister === repeatPassword &&
-			userNameRegister !== "" &&
-			email !== "" &&
-			passwordRegister !== ""
+			data.nameRegister === "" ||
+			data.email === "" ||
+			data.age === "" ||
+			data.password === ""
 		) {
-			alert("Se ha registrado exitosamente");
-			setLoggedIn(true);
-			setIsRegister(true);
+			onOpen();
+			setValidations(1);
+		}
+		if (
+			data.password === data.repeatPassword &&
+			data.nameRegister !== "" &&
+			data.email !== "" &&
+			data.age !== "" &&
+			data.password !== ""
+		) {
+			onOpen();
+			setValidations(3);
+			// setLoggedIn(true);
+			// setIsRegister(true);
 		}
 	};
 
 	return (
-		<div className="min-h-3.5 my-auto mt-[10%]">
+		<Box minH={3.5} my="auto" mt="10%">
+			<ModalValidations
+				isOpen={isOpen}
+				onClose={onClose}
+				validations={validations}
+				setIsRegister={setIsRegister}
+				setLoggedIn={setLoggedIn}
+			/>
+
 			<h2 className="text-2xl text-center mb-8">Regístrate</h2>
-			<form
-				onSubmit={handleRegisterSubmit}
-				className="border border-black rounded-2xl p-5 max-w-[300px] mx-auto mb-8"
+			<Box
+				as="form"
+				border="1px"
+				borderColor="black"
+				borderRadius="2xl"
+				p={5}
+				maxW="500px"
+				mx="auto"
+				mb={8}
+				onSubmit={handleSubmit(onSubmit)}
 			>
-				<div className="mb-5 relative">
-					<label htmlFor="userName" className="block mb-[10px]">
+				<FormControl mb={5} position="relative">
+					<FormLabel display="block" mb="10px">
 						Nombre Usuario
-					</label>
-					<input
+					</FormLabel>
+					<Input
+						w="full"
+						border="1px"
+						borderColor="black"
+						borderRadius="md"
+						px={2}
+						py={2}
 						type="text"
 						placeholder="Maria Antonieta"
-						className="w-full border border-black rounded-md px-1 py-2"
-						value={userNameRegister}
-						onChange={(e) => setUserNameRegister(e.target.value)}
+						{...register("nameRegister")}
 					/>
-				</div>
-				<div className="mb-5 relative">
-					<label htmlFor="email" className="block mb-[10px]">
+				</FormControl>
+
+				<FormControl
+					mb={5}
+					position="relative"
+					isInvalid={errors.email ? true : false}
+				>
+					<FormLabel display="block" mb="10px">
 						Email
-					</label>
-					<input
-						type="email"
+					</FormLabel>
+					<Input
+						w="full"
+						border="1px"
+						borderColor="black"
+						borderRadius="md"
+						px={2}
+						py={2}
+						type="text"
 						placeholder="MariaAntonieta@gmail.com"
-						className="w-full border border-black rounded-md px-1 py-2"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						{...register("email", {
+							minLength: {
+								value: 10,
+								message: "La dirección del mail es muy corta.",
+							},
+							pattern: {
+								value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+								message: "El mail no es correcto",
+							},
+						})}
 					/>
-				</div>
-				<div className="mb-5 relative">
-					<label htmlFor="password" className="block mb-[10px]">
+					<ErrorMessage
+						errors={errors}
+						name="email"
+						render={({ messages }) =>
+							messages &&
+							Object.entries(messages).map(([type, message]) => (
+								<p style={{ color: "red" }} key={type}>
+									{message}
+								</p>
+							))
+						}
+					/>
+				</FormControl>
+
+				<FormControl mb={5} position="relative">
+					<FormLabel display="block" mb="10px">
+						Edad
+					</FormLabel>
+					<Input
+						w="full"
+						border="1px"
+						borderColor="black"
+						borderRadius="md"
+						px={2}
+						py={2}
+						type="number"
+						{...register("age", {
+							maxLength: {
+								value: 2,
+								message: "El maximo de caracteres es de dos.",
+							},
+						})}
+					/>
+					<ErrorMessage
+						errors={errors}
+						name="age"
+						render={({ messages }) =>
+							messages &&
+							Object.entries(messages).map(([type, message]) => (
+								<p style={{ color: "red" }} key={type}>
+									{message}
+								</p>
+							))
+						}
+					/>
+				</FormControl>
+
+				<FormControl
+					mb={5}
+					position="relative"
+					isInvalid={errors.password ? true : false}
+				>
+					<FormLabel display="block" mb="10px">
 						Contraseña
-					</label>
-					<input
+					</FormLabel>
+					<Input
+						w="full"
+						border="1px"
+						borderColor="black"
+						borderRadius="md"
+						px={2}
+						py={2}
 						type={typePassword}
-						className="w-full border border-black rounded-md px-1 py-2"
-						value={passwordRegister}
-						onChange={(e) => setPasswordRegister(e.target.value)}
+						placeholder="Debe tener al menos una mayuscula y un número."
+						{...register("password", {
+							minLength: {
+								value: 3,
+								message: "El mínimo de caracteres es de tres.",
+							},
+							maxLength: {
+								value: 10,
+								message: "El maximo de caracteres es de diez.",
+							},
+							pattern: {
+								value: /^(?=.*[A-Z])(?=.*[0-9]).{3,10}$/,
+								message: "La contraseña no cumple con el requerimiento mínimo",
+							},
+						})}
 					/>
 					<ViewPassword
 						typePassword={typePassword}
 						setTypePassword={setTypePassword}
 					/>
-				</div>
-				<div className="mb-5 relative">
-					<label htmlFor="password" className="block mb-[10px]">
+					<ErrorMessage
+						errors={errors}
+						name="password"
+						render={({ messages }) =>
+							messages &&
+							Object.entries(messages).map(([type, message]) => (
+								<p style={{ color: "red" }} key={type}>
+									{message}
+								</p>
+							))
+						}
+					/>
+				</FormControl>
+
+				<FormControl
+					mb={5}
+					position="relative"
+					isInvalid={errors.repeatPassword ? true : false}
+				>
+					<FormLabel display="block" mb="10px">
 						Repita Contraseña
-					</label>
-					<input
-						type={repeatPassword}
-						className="w-full border border-black rounded-md px-1 py-2"
-						value={repeatPassword}
-						onChange={(e) => setRepeatPassword(e.target.value)}
+					</FormLabel>
+					<Input
+						w="full"
+						border="1px"
+						borderColor="black"
+						borderRadius="md"
+						px={2}
+						py={2}
+						type={typePassword}
+						{...register("repeatPassword", {
+							minLength: {
+								value: 3,
+								message: "El mínimo de caracteres es de tres.",
+							},
+							maxLength: {
+								value: 10,
+								message: "El maximo de caracteres es de diez.",
+							},
+							pattern: {
+								value: /^(?=.*[A-Z])(?=.*[0-9]).{3,10}$/,
+								message: "La contraseña no cumple con el requerimiento mínimo",
+							},
+						})}
 					/>
 					<ViewPassword
 						typePassword={typePassword}
 						setTypePassword={setTypePassword}
 					/>
-				</div>
-				<input
+					<ErrorMessage
+						errors={errors}
+						name="repeatPassword"
+						render={({ messages }) =>
+							messages &&
+							Object.entries(messages).map(([type, message]) => (
+								<p style={{ color: "red" }} key={type}>
+									{message}
+								</p>
+							))
+						}
+					/>
+				</FormControl>
+
+				<Button
+					px={3}
+					py={2}
+					fontWeight="normal"
+					backgroundColor="#e5e7eb"
+					_hover={{ backgroundColor: "#f0f1f3" }}
+					borderRadius="5px"
+					display="block"
+					mx="auto"
+					cursor="pointer"
 					type="submit"
-					value="Iniciar Sesión"
-					className="border px-2 py-1 bg-gray-200 rounded block mx-auto cursor-pointer"
-				/>
-			</form>
+				>
+					Registrarse
+				</Button>
+			</Box>
 			<p className="text-center">
 				Ya tienes cuenta?{" "}
-				<span
-					className="text-[#1d1dcd] cursor-pointer underline"
+				<Box
+					as="span"
+					color="#1d1dcd"
+					cursor="pointer"
+					textDecoration="underline"
 					onClick={() => setIsRegister(true)}
 				>
 					Inicia sesión
-				</span>
+				</Box>
 				.
 			</p>
-		</div>
+		</Box>
 	);
 };

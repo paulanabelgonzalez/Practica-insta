@@ -9,12 +9,16 @@ import { SlideInfinit } from "../../slideInfinit/SlideInfinit";
 
 import { posts } from "../../../utils/posts";
 
+import { useDisclosure } from "@chakra-ui/react";
+
 import profilePic from "../../../assets/perfil.jpg";
 
 export const LoginWrapper = () => {
 	const [loggedIn, setLoggedIn] = useState(true);
 	const [isRegister, setIsRegister] = useState(true);
 	const [postsArray, setPostsArray] = useState(posts);
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [validations, setValidations] = useState();
 
 	const usuario = {
 		nombre: "Paula",
@@ -58,9 +62,25 @@ export const LoginWrapper = () => {
 		return (
 			<>
 				{isRegister ? (
-					<Login setLoggedIn={setLoggedIn} setIsRegister={setIsRegister} />
+					<Login
+						setLoggedIn={setLoggedIn}
+						setIsRegister={setIsRegister}
+						isOpen={isOpen}
+						onOpen={onOpen}
+						onClose={onClose}
+						validations={validations}
+						setValidations={setValidations}
+					/>
 				) : (
-					<Register setLoggedIn={setLoggedIn} setIsRegister={setIsRegister} />
+					<Register
+						setLoggedIn={setLoggedIn}
+						setIsRegister={setIsRegister}
+						isOpen={isOpen}
+						onOpen={onOpen}
+						onClose={onClose}
+						validations={validations}
+						setValidations={setValidations}
+					/>
 				)}
 			</>
 		);

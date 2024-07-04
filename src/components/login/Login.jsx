@@ -4,18 +4,27 @@ import { ViewPassword } from "./ViewPassword";
 
 import {
 	Box,
+	Button,
 	FormControl,
 	FormLabel,
 	Input,
-	useDisclosure,
+	// useDisclosure,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { ModalValidations } from "./ModalValidations";
 
-export const Login = ({ setLoggedIn, setIsRegister }) => {
+export const Login = ({
+	setLoggedIn,
+	setIsRegister,
+	isOpen,
+	onOpen,
+	onClose,
+	validations,
+	setValidations,
+}) => {
 	const [typePassword, setTypePassword] = useState("password");
-	const [validations, setValidations] = useState();
-	const { isOpen, onOpen, onClose } = useDisclosure();
+
+	// const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const { register, handleSubmit } = useForm();
 	// console.log(errors);
@@ -107,18 +116,29 @@ export const Login = ({ setLoggedIn, setIsRegister }) => {
 					/>
 				</FormControl>
 
-				<input
+				<Button
+					px={3}
+					py={2}
+					fontWeight="normal"
+					backgroundColor="#e5e7eb"
+					_hover={{ backgroundColor: "#f0f1f3" }}
+					borderRadius="5px"
+					display="block"
+					mx="auto"
+					cursor="pointer"
 					type="submit"
-					value="Iniciar Sesión"
-					className="border px-2 py-1 bg-gray-200 rounded block mx-auto cursor-pointer"
-				/>
+				>
+					Iniciar Sesión
+				</Button>
 			</Box>
 
 			<p className="text-center">
 				No tienes cuenta?{" "}
 				<Box
 					as="span"
-					className="text-[#1d1dcd] cursor-pointer underline"
+					color="#1d1dcd"
+					cursor="pointer"
+					textDecoration="underline"
 					onClick={() => setIsRegister(false)}
 				>
 					Regístrate
