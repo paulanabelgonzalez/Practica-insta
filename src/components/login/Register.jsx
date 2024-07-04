@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { color } from "framer-motion";
 
 export const Register = ({
 	setLoggedIn,
@@ -18,12 +17,7 @@ export const Register = ({
 	validations,
 	setValidations,
 }) => {
-	const [userNameRegister, setUserNameRegister] = useState("");
-	const [email, setEmail] = useState("");
-	const [passwordRegister, setPasswordRegister] = useState("");
-	const [repeatPassword, setRepeatPassword] = useState("");
 	const [typePassword, setTypePassword] = useState("password");
-	const [isValid, setIsValid] = useState(false);
 
 	const {
 		register,
@@ -37,10 +31,6 @@ export const Register = ({
 
 	const onSubmit = (data) => {
 		console.log(data.nameRegister);
-
-		// const datos = {
-		// 	name: data.nameRegister,
-		// };
 
 		// console.log(datos);
 
@@ -66,8 +56,6 @@ export const Register = ({
 		) {
 			onOpen();
 			setValidations(3);
-			// setLoggedIn(true);
-			// setIsRegister(true);
 		}
 	};
 

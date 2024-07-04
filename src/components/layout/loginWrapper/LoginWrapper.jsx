@@ -14,7 +14,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import profilePic from "../../../assets/perfil.jpg";
 
 export const LoginWrapper = () => {
-	const [loggedIn, setLoggedIn] = useState(true);
+	const [loggedIn, setLoggedIn] = useState(false);
 	const [isRegister, setIsRegister] = useState(true);
 	const [postsArray, setPostsArray] = useState(posts);
 	const { isOpen, onOpen, onClose } = useDisclosure();

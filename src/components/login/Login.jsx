@@ -2,14 +2,7 @@ import { useState } from "react";
 
 import { ViewPassword } from "./ViewPassword";
 
-import {
-	Box,
-	Button,
-	FormControl,
-	FormLabel,
-	Input,
-	// useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { ModalValidations } from "./ModalValidations";
 
@@ -23,8 +16,6 @@ export const Login = ({
 	setValidations,
 }) => {
 	const [typePassword, setTypePassword] = useState("password");
-
-	// const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const { register, handleSubmit } = useForm();
 	// console.log(errors);
